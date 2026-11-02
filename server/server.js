@@ -217,17 +217,17 @@ app.get("/api/events", async (req, res) => {
 // EVENT CREATION
 app.post("/api/events", async (req, res) => {
   try {
-    const { title, description, event_date, start_time, end_time, location, capacity } = req.body;
+    const { title, event_date, start_time, end_time, location, capacity } = req.body;
     
-    console.log("Natanggap na data mula sa frontend:", req.body);
+    console.log("Data received from the frontend:", req.body);
 
     // UPCOMING DEFAULT STATUS
     const defaultStatus = "Upcoming";
 
     const result = await pool.query(
-      `INSERT INTO events (title, description, event_date, start_time, end_time, location, capacity, status) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-      [title, description, event_date, start_time, end_time, location, capacity, defaultStatus]
+      `INSERT INTO events (title, event_date, start_time, end_time, location, capacity, status) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [title, event_date, start_time, end_time, location, capacity, defaultStatus]
     );
 
     const newEvent = {
